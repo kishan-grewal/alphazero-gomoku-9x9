@@ -1,4 +1,5 @@
 archive
 .vscode
 plots
+docs
 model_iter_*.pt
