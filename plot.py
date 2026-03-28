@@ -15,7 +15,8 @@ import matplotlib.pyplot as plt
 
 # ── set your log path here ───────────────────────────────────────────────────
 # MODEL_DIR = r"SUCCESS_400_20_150"
-MODEL_DIR = r"SUCCESS_400_30_180"
+# MODEL_DIR = r"SUCCESS_400_30_180"
+MODEL_DIR = r"SUCCESS_800_40_200"
 PATH = Path(MODEL_DIR) / "training_log.txt"
 # ── optionally save plots to a directory (set to None to skip) ───────────────
 SAVE_DIR = Path(MODEL_DIR) / "plots"
