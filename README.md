@@ -2,6 +2,8 @@
 
 AlphaZero-style reinforcement learning for 9x9 Gomoku, with trained checkpoints and Pygame demos.
 
+![AlphaZero 800/40/200 self-play](media/az800-vs-az800-x10.gif)
+
 ## Setup
 
 ```bash
