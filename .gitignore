@@ -3,3 +3,4 @@ archive
 plots
 docs
 model_iter_*.pt
+*.mp4
