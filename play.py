@@ -271,8 +271,9 @@ class Renderer:
         pygame.init()
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("AlphaZero Gomoku")
-        self.font = pygame.font.Font(None, 32)
-        self.small_font = pygame.font.Font(None, 24)
+        self.status_font_size = 24
+        self.min_status_font_size = 18
+        self.small_font = pygame.font.Font(None, 20)
 
         self.bg_color = (220, 179, 92)
         self.line_color = (0, 0, 0)
@@ -287,6 +288,15 @@ class Renderer:
         if 0 <= row < BOARD_SIZE and 0 <= col < BOARD_SIZE:
             return row, col
         return None
+
+    def render_status_text(self, message):
+        max_width = self.width - 2 * self.margin
+        for size in range(self.status_font_size, self.min_status_font_size - 1, -1):
+            font = pygame.font.Font(None, size)
+            text = font.render(message, True, self.text_color)
+            if text.get_width() <= max_width:
+                return text
+        return pygame.font.Font(None, self.min_status_font_size).render(message, True, self.text_color)
 
     def render(self, game, status=None):
         self.screen.fill(self.bg_color)
@@ -334,19 +344,20 @@ class Renderer:
 
         # Status bar
         if status:
-            text = self.font.render(status, True, self.text_color)
+            status_message = status
         elif game.is_terminal():
             w = game.winner()
             if w == 1:
-                text = self.font.render("Black (X) wins!", True, self.text_color)
+                status_message = "Black (X) wins!"
             elif w == -1:
-                text = self.font.render("White (O) wins!", True, self.text_color)
+                status_message = "White (O) wins!"
             else:
-                text = self.font.render("Draw!", True, self.text_color)
+                status_message = "Draw!"
         else:
             player_name = "Black (X)" if game.current_player == 1 else "White (O)"
-            text = self.font.render(f"{player_name} to move  |  Move {game.move_count + 1}", True, self.text_color)
+            status_message = f"{player_name} to move  |  Move {game.move_count + 1}"
 
+        text = self.render_status_text(status_message)
         self.screen.blit(text, (self.margin, self.height - 45))
         pygame.display.flip()
 
