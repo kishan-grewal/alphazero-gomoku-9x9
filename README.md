@@ -2,23 +2,62 @@
 
 This repo contains an AlphaZero-style reinforcement learning system for 9x9 Gomoku, with trained checkpoints and a Pygame interface for playing against the final model.
 
-## GPU Setup With Conda
+## Environment Setup
 
-Create the CUDA-enabled conda environment:
+There are three supported ways to create an environment.
+
+### Option 1: GPU Conda Environment
+
+Use this option for CUDA training and fastest inference:
 
 ```bash
 conda env create -f gomoku-gpu.yml
 conda activate gomoku-gpu
 ```
 
-If the environment already exists, update it instead:
+If the GPU environment already exists, update it instead:
 
 ```bash
 conda env update -f gomoku-gpu.yml --prune
 conda activate gomoku-gpu
 ```
 
-Check that PyTorch can see the GPU:
+### Option 2: CPU Conda Environment
+
+Use this option on machines without an NVIDIA GPU:
+
+```bash
+conda env create -f gomoku-cpu.yml
+conda activate gomoku-cpu
+```
+
+If the CPU environment already exists, update it instead:
+
+```bash
+conda env update -f gomoku-cpu.yml --prune
+conda activate gomoku-cpu
+```
+
+### Option 3: uv Environment
+
+Use this option if you prefer `uv` instead of conda:
+
+```bash
+uv sync
+```
+
+Run scripts through `uv`:
+
+```bash
+uv run python play.py
+uv run python train.py
+```
+
+The `uv` configuration uses the PyTorch CUDA 12.4 wheel index on non-macOS platforms and the CPU wheel index on macOS.
+
+### Check PyTorch Device
+
+After setting up an environment, check whether PyTorch can see the GPU:
 
 ```bash
 python -c "import torch; print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU only')"
@@ -41,8 +80,13 @@ SUCCESS_800_40_200/model_final.pt
 Run the game:
 
 ```bash
-conda activate gomoku-gpu
 python play.py
+```
+
+With `uv`, run:
+
+```bash
+uv run python play.py
 ```
 
 `play.py` is already configured to load `SUCCESS_800_40_200/model_final.pt` and run with `800` MCTS simulations. When the window opens, click the left half to play first as Black, or the right half to play second as White.
@@ -72,8 +116,13 @@ NUM_ITERATIONS = 200
 Then start training:
 
 ```bash
-conda activate gomoku-gpu
 python train.py
+```
+
+With `uv`, run:
+
+```bash
+uv run python train.py
 ```
 
 Training writes logs and checkpoints into `output/`:

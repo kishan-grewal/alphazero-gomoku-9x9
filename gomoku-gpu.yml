@@ -6,12 +6,9 @@ channels:
 dependencies:
   - python=3.11
   - pytorch
-  - torchvision
-  - torchaudio
   - pytorch-cuda=12.4
   - numpy
   - pandas
   - pygame
   - tqdm
-  - tensorboard
   - matplotlib
